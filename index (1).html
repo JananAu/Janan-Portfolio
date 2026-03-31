@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Janan Au — Marketing Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f2ee;
+    --accent: #ff3f1a;
+    --accent2: #ffd166;
+    --mid: #1e1e1e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 3rem;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.12em; color: var(--accent); }
+  .nav-links { display: flex; gap: 2.2rem; }
+  .nav-links a { color: var(--white); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s, color 0.2s; }
+  .nav-links a:hover { opacity: 1; color: var(--accent2); }
+
+  #hero { min-height: 100vh; display: flex; align-items: flex-end; padding: 0 3rem 5rem; position: relative; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 40%, #ff3f1a22 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 20% 80%, #ffd16611 0%, transparent 60%); }
+  .hero-grid { position: absolute; inset: 0; opacity: 0.04; background-image: linear-gradient(var(--white) 1px, transparent 1px), linear-gradient(90deg, var(--white) 1px, transparent 1px); background-size: 60px 60px; }
+  .hero-label { font-size: 0.72rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.8rem; }
+  .hero-label::before { content:''; display:block; width:32px; height:1px; background:var(--accent); }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4.5rem, 12vw, 9rem); line-height: 0.92; letter-spacing: 0.02em; }
+  .hero-title .italic { font-family: 'DM Serif Display', serif; font-style: italic; color: var(--accent2); font-size: 0.85em; }
+  .hero-sub { font-size: 1rem; opacity: 0.55; max-width: 400px; margin-top: 1.8rem; line-height: 1.7; }
+  .hero-cta { display: inline-block; margin-top: 2.5rem; padding: 0.9rem 2.4rem; background: var(--accent); color: var(--white); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; text-decoration: none; font-weight: 500; transition: background 0.2s, transform 0.2s; }
+  .hero-cta:hover { background: #ff5c38; transform: translateY(-2px); }
+  .hero-number { position: absolute; right: 3rem; top: 50%; font-family: 'Bebas Neue', sans-serif; font-size: clamp(10rem, 22vw, 18rem); color: rgba(255,255,255,0.03); line-height: 1; user-select: none; transform: translateY(-40%); }
+
+  section { padding: 7rem 3rem; }
+  .section-label { font-size: 0.68rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem, 6vw, 4.5rem); line-height: 1; letter-spacing: 0.03em; margin-bottom: 3.5rem; }
+
+  #about { background: var(--mid); }
+  .about-bio { max-width: 680px; margin-bottom: 3.5rem; }
+  .about-tag { display: inline-block; padding: 0.35rem 1rem; border: 1px solid var(--accent2); color: var(--accent2); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .about-text { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 1.2rem; line-height: 1.85; opacity: 0.85; }
+  .highlights { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-bottom: 3rem; }
+  .highlight-item { background: rgba(255,255,255,0.04); padding: 2rem 1.8rem; border: 1px solid rgba(255,255,255,0.06); }
+  .highlight-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+  .highlight-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.4rem; }
+  .highlight-value { font-size: 0.95rem; opacity: 0.85; line-height: 1.5; }
+  .skills-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .skill-chip { padding: 0.45rem 1rem; background: rgba(255,255,255,0.06); font-size: 0.72rem; letter-spacing: 0.1em; border: 1px solid rgba(255,255,255,0.1); color: var(--white); }
+
+  #projects { background: var(--black); }
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5px; }
+  .project-card { position: relative; overflow: hidden; background: #141414; cursor: pointer; display: flex; flex-direction: column; }
+  .card-header { padding: 2.5rem 2rem 1.5rem; min-height: 140px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .card-pattern-1 { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
+  .card-pattern-2 { background: linear-gradient(135deg, #1e3a1e, #2d5a2d, #1a3a1a); }
+  .card-pattern-3 { background: linear-gradient(135deg, #3a1e1e, #5a2d2d, #3a1a1a); }
+  .card-pattern-4 { background: linear-gradient(135deg, #2a1e3a, #3d2d5a, #1e1a3a); }
+  .card-emoji { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.7; }
+  .card-body { padding: 1.5rem 2rem 2rem; flex: 1; display: flex; flex-direction: column; }
+  .card-type { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .card-title { font-family: 'DM Serif Display', serif; font-size: 1.25rem; line-height: 1.3; margin-bottom: 0.8rem; }
+  .card-desc { font-size: 0.82rem; opacity: 0.5; line-height: 1.7; flex: 1; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.07); }
+  .card-tag { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.35; }
+  .card-btn { display: inline-block; padding: 0.5rem 1.2rem; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: var(--white); text-decoration: none; font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; transition: background 0.2s, border-color 0.2s; }
+  .card-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+  .pdf-modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.92); align-items: center; justify-content: center; flex-direction: column; }
+  .pdf-modal.open { display: flex; }
+  .pdf-modal-header { width: 90%; max-width: 1000px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .pdf-modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; letter-spacing: 0.08em; }
+  .pdf-close { background: var(--accent); border: none; color: white; padding: 0.5rem 1.2rem; cursor: pointer; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+  .pdf-frame { width: 90%; max-width: 1000px; height: 80vh; border: none; background: white; }
+
+  #video { background: var(--mid); }
+  .video-wrapper { max-width: 800px; }
+  .reel-embed { background: #0f0f0f; border: 1px solid rgba(255,255,255,0.08); min-height: 480px; display: flex; align-items: center; justify-content: center; }
+  .reel-placeholder { text-align: center; padding: 3rem; }
+  .reel-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+  .reel-note { font-size: 0.82rem; opacity: 0.45; line-height: 1.8; }
+  .reel-note a { color: var(--accent2); text-decoration: none; }
+  .reel-note a:hover { text-decoration: underline; }
+  .video-label-below { margin-top: 1.2rem; font-size: 0.78rem; opacity: 0.45; letter-spacing: 0.1em; }
+  .video-meta { display: flex; gap: 2rem; margin-top: 0.5rem; flex-wrap: wrap; }
+  .video-meta span { font-size: 0.72rem; opacity: 0.35; letter-spacing: 0.08em; }
+
+  #personal { background: var(--black); }
+  .personal-card { background: #0f0f0f; border: 1px solid rgba(255,255,255,0.07); padding: 3rem; max-width: 800px; display: flex; gap: 3rem; align-items: flex-start; }
+  .personal-num { font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: rgba(255,255,255,0.06); line-height: 1; min-width: 60px; }
+  .personal-info { flex: 1; }
+  .personal-type { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent2); margin-bottom: 0.5rem; }
+  .personal-title { font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 1rem; line-height: 1.2; }
+  .personal-desc { font-size: 0.88rem; opacity: 0.55; line-height: 1.75; margin-bottom: 1.8rem; }
+  .personal-btn { display: inline-block; padding: 0.7rem 1.8rem; background: transparent; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; transition: background 0.2s, color 0.2s; }
+  .personal-btn:hover { background: var(--accent); color: var(--white); }
+
+  #contact { background: var(--accent); color: var(--black); text-align: center; }
+  #contact .section-label { color: rgba(0,0,0,0.4); }
+  #contact .section-title { color: var(--black); margin-bottom: 1rem; }
+  .contact-sub { font-size: 1rem; opacity: 0.6; margin-bottom: 3rem; }
+  .contact-email { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 0.06em; color: var(--black); text-decoration: none; border-bottom: 3px solid rgba(0,0,0,0.3); padding-bottom: 0.3rem; transition: border-color 0.2s; display: inline-block; margin-bottom: 3rem; }
+  .contact-email:hover { border-color: var(--black); }
+  .socials { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .social-btn { padding: 0.7rem 1.6rem; border: 2px solid var(--black); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--black); text-decoration: none; font-weight: 500; transition: background 0.2s, color 0.2s; cursor: pointer; background: transparent; font-family: 'DM Sans', sans-serif; }
+  .social-btn:hover { background: var(--black); color: var(--accent); }
+
+  footer { background: var(--black); text-align: center; padding: 2rem; font-size: 0.7rem; opacity: 0.3; letter-spacing: 0.15em; }
+
+  .fade-up { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
+  .fade-up.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.65rem; }
+    section { padding: 5rem 1.5rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    #hero { padding: 0 1.5rem 4rem; }
+    .hero-number { font-size: 6rem; right: 1rem; }
+    .highlights { grid-template-columns: 1fr; }
+    .personal-card { flex-direction: column; gap: 1rem; padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PDF MODAL -->
+<div class="pdf-modal" id="pdfModal">
+  <div class="pdf-modal-header">
+    <div class="pdf-modal-title" id="pdfModalTitle"></div>
+    <button class="pdf-close" onclick="closePDF()">✕ Close</button>
+  </div>
+  <iframe class="pdf-frame" id="pdfFrame" src=""></iframe>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Janan Au</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#video">Video</a>
+    <a href="#personal">Personal</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-number">JA</div>
+  <div>
+    <div class="hero-label">Marketing Portfolio · 2025</div>
+    <h1 class="hero-title">
+      Creative<br>
+      <span class="italic">& Strategic</span><br>
+      Marketer
+    </h1>
+    <p class="hero-sub">Turning bold ideas into campaigns that move people — from brand storytelling to content that converts.</p>
+    <a href="#projects" class="hero-cta">View My Work</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-up">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">The<br>Story So Far</h2>
+    <div class="about-bio">
+      <div class="about-tag">Marketing · Content · Visual Production</div>
+      <p class="about-text">"A Marketing & Communication student with a passion for creative storytelling, social media content, and visual production. Trilingual in Cantonese, Mandarin, and English (with B1 French), I bring a multicultural perspective to every campaign I touch. Currently seeking a full-time internship where I can turn bold ideas into real impact."</p>
+    </div>
+    <div class="highlights">
+      <div class="highlight-item">
+        <div class="highlight-icon">🌍</div>
+        <div class="highlight-label">Languages</div>
+        <div class="highlight-value">Cantonese · Mandarin · English · French (B1)</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🎓</div>
+        <div class="highlight-label">Education</div>
+        <div class="highlight-value">Marketing & Communication</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">📍</div>
+        <div class="highlight-label">Availability</div>
+        <div class="highlight-value">Full-time Internship · Immediately</div>
+      </div>
+    </div>
+    <div class="skills-row">
+      <span class="skill-chip">Content Strategy</span>
+      <span class="skill-chip">Social Media</span>
+      <span class="skill-chip">Video Editing</span>
+      <span class="skill-chip">Copywriting</span>
+      <span class="skill-chip">Canva / Figma</span>
+      <span class="skill-chip">Photoshop</span>
+      <span class="skill-chip">Analytics</span>
+      <span class="skill-chip">Brand Strategy</span>
+    </div>
+  </div>
+</section>
+
+<!-- SCHOOL PROJECTS -->
+<section id="projects">
+  <div class="fade-up">
+    <div class="section-label">Academic Work</div>
+    <h2 class="section-title">School<br>Projects</h2>
+  </div>
+  <div class="projects-grid fade-up">
+
+    <div class="project-card">
+      <div class="card-header card-pattern-1">
+        <div class="card-emoji">👗</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Group Project · Sustainability</div>
+        <div class="card-title">AMI Paris – Sustainability Strategy</div>
+        <div class="card-desc">Developed an artisan-led pop-up concept in Le Marais to promote circular fashion through garment upcycling and traditional craftsmanship.</div>
+        <div class="card-footer">
+          <div class="card-tag">Fashion · Paris</div>
+          <a href="#" class="card-btn" onclick="openPDF('Ami - Final Presentation (2).pdf','AMI Paris – Sustainability Strategy'); return false;">View PDF ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-header card-pattern-2">
+        <div class="card-emoji">🌿</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Group Project · Rebranding</div>
+        <div class="card-title">Klorane – Ayurshine Ritual</div>
+        <div class="card-desc">Rebranded Klorane for the Indian market by blending its pharmaceutical heritage with an Ayurvedic-inspired 4-step hair care ritual.</div>
+        <div class="card-footer">
+          <div class="card-tag">Beauty · India Market</div>
+          <a href="#" class="card-btn" onclick="openPDF('KLORANE_Group4_GREEN.pdf','Klorane – Ayurshine Ritual'); return false;">View PDF ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-header card-pattern-3">
+        <div class="card-emoji">✨</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Group Project · Digital Strategy</div>
+        <div class="card-title">Maison Margiela – Digital Transformation</div>
+        <div class="card-desc">Analyzed omnichannel strategies and proposed a "Luxury 4.0" model to enhance personalized customer engagement through AI and immersive digital experiences.</div>
+        <div class="card-footer">
+          <div class="card-tag">Luxury · Digital</div>
+          <a href="#" class="card-btn" onclick="openPDF('Maison Margiela Presentation.pdf','Maison Margiela – Digital Transformation'); return false;">View PDF ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-header card-pattern-4">
+        <div class="card-emoji">🎬</div>
+      </div>
+      <div class="card-body">
+        <div class="card-type">Group Project · Market Analysis</div>
+        <div class="card-title">Netflix – Strategic Market Analysis</div>
+        <div class="card-desc">Evaluated Netflix's global competitive advantage, focusing on data-based personalization and its strategic response to the evolving SVOD landscape.</div>
+        <div class="card-footer">
+          <div class="card-tag">Streaming · Strategy</div>
+          <a href="#" class="card-btn" onclick="openPDF('Netflix (Final Presentation) – Group 7.pdf','Netflix – Strategic Market Analysis'); return false;">View PDF ↗</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video">
+  <div class="fade-up">
+    <div class="section-label">Visual Storytelling</div>
+    <h2 class="section-title">Video<br>Editing</h2>
+    <div class="video-wrapper">
+      <div class="reel-embed">
+        <!-- PASTE YOUR INSTAGRAM EMBED CODE HERE -->
+        <div class="reel-placeholder">
+          <div class="reel-icon">🎞️</div>
+          <p class="reel-note">
+            Instagram Reels · Content Creation<br><br>
+            Visit <a href="https://www.instagram.com/sap6gau2suk1_official/" target="_blank">@sap6gau2suk1_official</a> to view my reels.<br>
+            <br>
+            <em style="font-size:0.75rem; opacity:0.6;">(Paste your Instagram embed code here to display inline)</em>
+          </p>
+        </div>
+      </div>
+      <p class="video-label-below">Instagram Reels · Social Content Creation</p>
+      <div class="video-meta">
+        <span>Platform: Instagram</span>
+        <span>2024–2025</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL WORK -->
+<section id="personal">
+  <div class="fade-up">
+    <div class="section-label">Self-Initiated</div>
+    <h2 class="section-title">Personal<br>Work</h2>
+  </div>
+  <div class="fade-up">
+    <div class="personal-card">
+      <div class="personal-num">01</div>
+      <div class="personal-info">
+        <div class="personal-type">Visual Design · Cultural Project</div>
+        <div class="personal-title">Yes Card — HK 00s Culture</div>
+        <div class="personal-desc">A personal creative project inspired by Hong Kong's 00s pop culture. Using Photoshop, I reimagined the iconic Yes Card aesthetic — blending nostalgia, graphic design, and cultural storytelling into a self-directed visual series.</div>
+        <a href="#" class="personal-btn" onclick="openPDF('Yes Card (All).pdf','Yes Card – HK 00s Culture'); return false;">View Project ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Let's Work<br>Together</h2>
+  <p class="contact-sub">Open to full-time internships & marketing roles — available immediately.</p>
+  <a href="mailto:jananau@gmail.com" class="contact-email">jananau@gmail.com</a>
+  <div class="socials">
+    <a href="https://www.instagram.com/sap6gau2suk1_official/" target="_blank" class="social-btn">Instagram</a>
+    <a href="https://www.threads.com/@long.france.journey" target="_blank" class="social-btn">Threads</a>
+    <a href="https://www.linkedin.com/in/jananau" target="_blank" class="social-btn">LinkedIn</a>
+    <button class="social-btn" onclick="openPDF('Au_Ching_Long_Janan_CV.pdf','Janan Au — CV')">View CV</button>
+    <button class="social-btn" onclick="openPDF('Recommendation_Au Ching Long Janan.pdf','Recommendation Letter')">Recommendation</button>
+  </div>
+</section>
+
+<footer>© 2025 Au Ching Long Janan · Marketing Portfolio</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 120);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function openPDF(filename, title) {
+    document.getElementById('pdfFrame').src = filename;
+    document.getElementById('pdfModalTitle').textContent = title;
+    document.getElementById('pdfModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePDF() {
+    document.getElementById('pdfModal').classList.remove('open');
+    document.getElementById('pdfFrame').src = '';
+    document.body.style.overflow = '';
+  }
+  document.getElementById('pdfModal').addEventListener('click', function(e) {
+    if (e.target === this) closePDF();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closePDF(); });
+</script>
+</body>
+</html>
